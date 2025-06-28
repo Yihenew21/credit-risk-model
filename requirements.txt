@@ -9,3 +9,6 @@ flake8
 xverse
 woe
 pydantic
+matplotlib
+seaborn
+jupyter
