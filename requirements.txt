@@ -1,0 +1,11 @@
+pandas
+numpy
+scikit-learn
+mlflow
+pytest
+fastapi
+uvicorn
+flake8
+xverse
+woe
+pydantic
