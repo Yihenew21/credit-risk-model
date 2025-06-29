@@ -23,3 +23,125 @@ However, making predictions based on this proxy carries potential business risks
   - **Pros**: Higher predictive accuracy, captures non-linear relationships and complex patterns.
   - **Cons**: Less interpretable, challenging to justify to regulators, higher computational cost, and risk of overfitting.
     In a regulated financial context, interpretability often outweighs marginal performance gains, making a simple, well-understood model like Logistic Regression with WoE a preferred choice unless a complex model can be rigorously validated and explained to regulators.
+
+---
+
+# 📊 Credit Risk Model Project
+
+## 🔎 Project Overview
+
+The **Credit Risk Model Project** aims to build an interpretable and regulatory-compliant machine learning pipeline for predicting transaction-based fraud risk. Aligned with the **Basel II Accord**, the project emphasizes **transparency**, **explainability**, and **auditability** in model development.
+
+The project is developed with a modular pipeline architecture, ensuring reproducibility, traceability, and iterative development. It includes robust data preprocessing, exploratory data analysis, feature engineering, model training, and an API interface for deployment.
+
+---
+
+## ⚙️ Project Structure
+
+```bash
+Credit_Risk_Model/
+├── data/
+│   ├── raw/                     # Raw dataset (e.g., from Kaggle)
+│   ├── processed/               # Processed data (after feature engineering)
+├── src/
+│   ├── __init__.py
+│   ├── data_processing.py       # Feature engineering and preprocessing scripts
+│   ├── model_training.py        # Model training and evaluation scripts
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── main.py              # FastAPI application
+│   │   ├── pydantic_models.py   # Pydantic models for API validation
+├── tests/
+│   ├── __init__.py
+│   ├── test_data_processing.py  # Unit tests for data processing
+├── notebooks/
+│   ├── eda.ipynb                # Exploratory Data Analysis notebook
+├── Dockerfile                   # Dockerfile for containerizing the API
+├── docker-compose.yml           # Docker Compose for running the service
+├── .github/
+│   ├── workflows/
+│   │   ├── ci.yml               # GitHub Actions CI/CD workflow
+├── requirements.txt             # Project dependencies
+├── README.md                    # Project documentation
+├── setup.py                     # Optional: For packaging the project
+```
+
+---
+
+## 📊 Technical Progress
+
+### ✅ Task 1: Business Understanding & EDA
+
+- Loaded dataset with 95,662 rows and 16 columns.
+- Initial hypothesis developed around `TransactionStartTime`, `Amount`, and `FraudResult`.
+- Explored:
+  - Distribution of target and features.
+  - Missing values.
+  - Behavioral aggregation patterns.
+- Insights from EDA shaped our proxy fraud signal design.
+
+### 🛠 Task 3: Feature Engineering Pipeline
+
+- Preprocessing:
+  - `KNNImputer`, `StandardScaler` for numerical data.
+  - One-hot encoding for categorical fields.
+- Custom features:
+  - Temporal breakdown (`transhour`, `transday`)
+  - Aggregate customer behaviors (`transcount`, `totalamount`)
+- Feature Selection:
+  - Used **Weight of Evidence (WoE)** and **Information Value (IV)** for regulatory-compliant variable filtering.
+
+The pipeline is modular using `scikit-learn`’s `Pipeline` and `ColumnTransformer` with `remainder='passthrough'`.
+
+---
+
+## 📈 Modeling Plan
+
+Upcoming phases include:
+
+- Model training (starting with Logistic Regression and Gradient Boosting).
+- Evaluation using AUC-ROC, confusion matrix, and cross-validation.
+- Interpretation using SHAP, LIME, and WoE-based dashboards.
+- Deployment via FastAPI.
+
+---
+
+## 📦 Setup & Usage
+
+### 🔧 Installation
+
+```bash
+git clone https://github.com/yourusername/Credit_Risk_Model.git
+cd Credit_Risk_Model
+python -m venv venv
+source venv/bin/activate   # or venv\Scripts\activate on Windows
+pip install -r requirements.txt
+```
+
+### 🚀 Running the API
+
+```bash
+uvicorn src.api.main:app --reload
+```
+
+---
+
+## 🔍 Future Improvements
+
+- Integrate visual dashboards for EDA and SHAP insights.
+- Automate model interpretability reports.
+- Extend pipeline for real-time fraud detection.
+
+---
+
+## 📑 Acknowledgements
+
+- KAIM Solar Challenge - W5 Credit Risk Modeling Track
+- scikit-learn, pandas, WoE encoder, SHAP, LIME, FastAPI
+
+---
+
+## 📬 Contact
+
+Project lead: **Yihenew Animut**  
+For questions or collaboration: `yihenew@example.com` _(replace with real contact)_
