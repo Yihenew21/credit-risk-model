@@ -12,3 +12,6 @@ pydantic
 matplotlib
 seaborn
 jupyter
+pytz
+python-dotenv
+pytest-mock
