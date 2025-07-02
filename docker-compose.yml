@@ -7,4 +7,4 @@ services:
       - .:/app
     environment:
       - MLFLOW_TRACKING_URI=http://host.docker.internal:5000
-    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
