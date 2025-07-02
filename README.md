@@ -21,7 +21,8 @@ However, predictions based on this proxy carry potential business risks:
   - **Cons**: May have lower predictive power, potentially missing complex patterns.
 - **Complex Models (Gradient Boosting)**:
   - **Pros**: Higher predictive accuracy, captures non-linear relationships and complex patterns.
-  - **Cons**: Less interpretable, challenging to justify to regulators, higher computational cost, risk of overfitting. In a regulated financial context, interpretability often outweighs marginal performance gains, making Logistic Regression with WoE a preferred choice unless a complex model can be rigorously validated and explained.
+  - **Cons**: Less interpretable, challenging to justify to regulators, higher computational cost, risk of overfitting.
+    In a regulated financial context, interpretability often outweighs marginal performance gains, making Logistic Regression with WoE a preferred choice unless a complex model can be rigorously validated and explained.
 
 ---
 
@@ -29,7 +30,7 @@ However, predictions based on this proxy carry potential business risks:
 
 ## 🔎 Project Overview
 
-The **Credit Risk Model Project** aims to build an interpretable and regulatory-compliant machine learning pipeline for predicting transaction-based fraud risk, aligned with the **Basel II Accord**. The project emphasizes **transparency**, **explainability**, and **auditability** through a modular pipeline architecture, ensuring reproducibility, traceability, and iterative development. It includes robust data preprocessing, exploratory data analysis (EDA), feature engineering, model training, unit testing, and a deployable FastAPI interface.
+The **Credit Risk Model Project** aims to build an interpretable and regulatory-compliant machine learning pipeline for predicting transaction-based fraud risk, aligned with the **Basel II Accord**. The project emphasizes **transparency**, **explainability**, and **auditability** through a modular pipeline architecture, ensuring reproducibility, traceability, and iterative development. It includes robust data preprocessing, exploratory data analysis (EDA), feature engineering, model training, unit testing, and a deployable FastAPI interface. The model has been successfully tested locally, with predictions working as expected.
 
 ---
 
@@ -113,7 +114,7 @@ Credit_Risk_Model/
   - Linting with Flake8.
   - Unit tests with pytest.
   - Docker build and container startup with `docker-compose`.
-  - Logs verification (API health check temporarily skipped).
+  - Logs verification (API health check temporarily skipped due to MLflow dependency).
 - Containerized the FastAPI app with Docker:
   - Used `docker-compose.yml` to set `working_dir: /app` and `PYTHONPATH=/app`.
   - Added MLflow fallback in `src/api/main.py` with `USE_MLFLOW=false` for CI.
@@ -123,7 +124,7 @@ Credit_Risk_Model/
 
 ## 📈 Modeling Plan
 
-- **Completed**: Initial model training and evaluation.
+- **Completed**: Initial model training and evaluation, with successful local predictions.
 - **Next Steps**: Refine models with hyperparameter tuning, enhance interpretability with SHAP and WoE dashboards, and deploy to a staging environment.
 
 ---
@@ -133,7 +134,7 @@ Credit_Risk_Model/
 ### 🔧 Installation
 
 ```bash
-git clone https://github.com/yourusername/Credit_Risk_Model.git
+git clone https://github.com/Yihenew21/Credit_Risk_Model.git
 cd Credit_Risk_Model
 python -m venv venv
 source venv/bin/activate   # or venv\Scripts\activate on Windows
@@ -146,13 +147,20 @@ pip install -r requirements.txt
 uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+- Test a prediction locally:
+  ```bash
+  curl -X POST "http://localhost:8000/predict" \
+       -H "Content-Type: application/json" \
+       -d '{"Amount_woe": -0.34, "trans_hour_woe": 0.12, "total_amount": 500.0, "avg_amount": 50.0, "trans_count": 10.0, "amount_std": 20.0, "trans_day": 15.0, "trans_month": 6.0, "trans_year": 2025.0, "CurrencyCode_UGX": 1.0, "ProviderId_ProviderId_1": 1.0, "ProductId_ProductId_1": 1.0, "ProductCategory_airtime": 1.0, "ChannelId_ChannelId_1": 1.0}'
+  ```
+
 ### 🐳 Running with Docker
 
 ```bash
 docker-compose up --build
 ```
 
-- Access the API at `http://localhost:8000`.
+- Access the API at `http://localhost:8000` and test with the same `curl` command above.
 
 ---
 
@@ -161,7 +169,7 @@ docker-compose up --build
 - Integrate visual dashboards for EDA, SHAP, and WoE insights.
 - Automate model interpretability reports for regulatory compliance.
 - Enable real-time fraud detection with streaming data.
-- Reintroduce API health checks in CI after resolving MLflow dependency.
+- Reintroduce API health checks in CI after resolving MLflow dependency or adding an MLflow server.
 
 ---
 
@@ -174,5 +182,5 @@ docker-compose up --build
 
 ## 📬 Contact
 
-Project lead: **Yihenew Animut**\
-For questions or collaboration: `yihenew@example.com` _(replace with real contact)_
+Project lead: **Yihenew Animut**  
+For questions or collaboration: `birukanimut1234@gmail.com`
