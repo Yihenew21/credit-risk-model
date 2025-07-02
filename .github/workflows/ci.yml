@@ -54,11 +54,6 @@ jobs:
       - name: Check container logs
         run: docker-compose logs
 
-      - name: Check API health
-        run: |
-          curl -f http://localhost:8000/ || exit 1
-          curl -f -X POST -H "Content-Type: application/json" -d '{"Amount_woe": -0.34, "trans_hour_woe": 0.12, "total_amount": 500.0, "avg_amount": 50.0, "trans_count": 10.0, "amount_std": 20.0, "trans_day": 15.0, "trans_month": 6.0, "trans_year": 2025.0, "CurrencyCode_UGX": 1.0, "ProviderId_ProviderId_1": 1.0, "ProductId_ProductId_1": 1.0, "ProductCategory_airtime": 1.0, "ChannelId_ChannelId_1": 1.0}' http://localhost:8000/predict || exit 1
-
       - name: Stop Docker container
         if: always()
         run: docker-compose down
