@@ -1,8 +1,13 @@
 from pydantic import BaseModel
 from typing import Optional
 
+
 class CustomerData(BaseModel):
-    """Pydantic model for validating incoming customer data with selected features."""
+    """
+    Pydantic model for validating incoming customer data with selected
+    features.
+    """
+
     Amount_woe: Optional[float] = 0.0
     trans_hour_woe: Optional[float] = 0.0
     total_amount: Optional[float] = 0.0
@@ -34,10 +39,12 @@ class CustomerData(BaseModel):
                 "ProviderId_ProviderId_1": 1.0,
                 "ProductId_ProductId_1": 1.0,
                 "ProductCategory_airtime": 1.0,
-                "ChannelId_ChannelId_1": 1.0
+                "ChannelId_ChannelId_1": 1.0,
             }
         }
 
+
 class PredictionResponse(BaseModel):
     """Pydantic model for the prediction response."""
+
     risk_probability: float
