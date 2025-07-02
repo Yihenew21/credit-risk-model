@@ -15,8 +15,8 @@ def mock_data():
         {
             "feature1": list(range(50)),
             "feature2": list(range(50, 100)),
-            "is_high_risk": [0, 1] * 25,  # Alternating 0s and 1s
-            # Sfor balanced classes
+            "is_high_risk": [0, 1] * 25,  # Alternating 0s and 1s for balanced
+            # classes
         }
     )
     return data
@@ -61,6 +61,7 @@ def test_train_and_tune_models_logs_metrics(mock_data, mocker):
     mocker.patch.object(
         mlflow, "register_model", return_value=mocker.Mock(version="1")
     )  # Mock registration
+    mock_set_experiment = mocker.patch.object(mlflow, "set_experiment")
 
     X_train, X_test, y_train, y_test = split_data(mock_data)
     train_and_tune_models(X_train, X_test, y_train, y_test, is_test=True)
@@ -69,3 +70,4 @@ def test_train_and_tune_models_logs_metrics(mock_data, mocker):
     assert mock_log_metrics.call_count > 0
     assert mock_log_params.call_count > 0
     assert mock_log_model.call_count > 0
+    mock_set_experiment.assert_called_once_with("Credit_Risk_Modeling")
